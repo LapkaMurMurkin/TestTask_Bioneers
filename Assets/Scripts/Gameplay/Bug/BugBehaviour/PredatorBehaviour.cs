@@ -23,12 +23,12 @@ namespace TestTask_Bioneers.Gameplay
             UpdateLifeTime();
         }
 
-        private IFood UpdateFoodSearch()
+        protected override IFood UpdateFoodSearch()
         {
             if (_predatorState.PeaceTimer.Update(_dt))
-                return _feedingSystem.GetClosestFood(_bugModel.Position, food => food != _bug);
+                return _feedingSystem.GetClosestFood(_bugModel.Position, _settings.BugViewDistance, food => food != _bug);
             else
-                return _feedingSystem.GetClosestHerb(_bugModel.Position);
+                return _feedingSystem.GetClosestHerb(_bugModel.Position, _settings.BugViewDistance);
         }
 
         private void UpdateLifeTime()

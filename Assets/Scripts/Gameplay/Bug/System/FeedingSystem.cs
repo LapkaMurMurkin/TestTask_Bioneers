@@ -19,17 +19,21 @@ namespace TestTask_Bioneers.Core
             _activeBugs = activeBugs;
         }
 
-        private IFood GetClosestFood(IReadOnlyCollection<IFood> collection, float2 position, Func<IFood, bool> filter = null)
+        private IFood GetClosestFood(IReadOnlyCollection<IFood> collection, float2 position, float viewRadius, Func<IFood, bool> filter = null)
         {
             IFood closestFood = null;
-            float minDistanceSq = float.MaxValue;
+            float minDistanceSq = viewRadius * viewRadius;
 
             foreach (IFood food in collection)
             {
                 if (filter != null && !filter(food))
                     continue;
 
-                float distSq = math.distancesq(position, food.Position);
+                float2 delta = food.Position - position;
+                float distSq = math.lengthsq(delta);
+
+                if (distSq > minDistanceSq)
+                    continue;
 
                 if (distSq < minDistanceSq)
                 {
@@ -41,20 +45,20 @@ namespace TestTask_Bioneers.Core
             return closestFood;
         }
 
-        public IFood GetClosestHerb(float2 position, Func<IFood, bool> filter = null)
+        public IFood GetClosestHerb(float2 position, float viewRadius, Func<IFood, bool> filter = null)
         {
-            return GetClosestFood(_activeHerb, position, filter);
+            return GetClosestFood(_activeHerb, position, viewRadius, filter);
         }
 
-        public IFood GetClosestBug(float2 position, Func<IFood, bool> filter = null)
+        public IFood GetClosestBug(float2 position, float viewRadius, Func<IFood, bool> filter = null)
         {
-            return GetClosestFood(_activeBugs, position, filter);
+            return GetClosestFood(_activeBugs, position, viewRadius, filter);
         }
 
-        public IFood GetClosestFood(float2 position, Func<IFood, bool> filter = null)
+        public IFood GetClosestFood(float2 position, float viewRadius, Func<IFood, bool> filter = null)
         {
-            IFood closestHerb = GetClosestHerb(position);
-            IFood closestBug = GetClosestBug(position, filter);
+            IFood closestHerb = GetClosestHerb(position, viewRadius);
+            IFood closestBug = GetClosestBug(position, viewRadius, filter);
 
             if (closestHerb == null) return closestBug;
             if (closestBug == null) return closestHerb;

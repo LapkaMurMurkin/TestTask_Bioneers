@@ -77,13 +77,10 @@ namespace TestTask_Bioneers.Gameplay
                 return;
             }
 
-            float distanceToFood = math.distance(_bugModel.Position, food.Position);
-            if (distanceToFood <= _settings.BugViewDistance)
-                this.MoveToFood(food);
-            else
-                this.RandomWalk();
+            this.MoveToFood(food);
         }
 
         protected abstract void UpdateReproduce();
+        protected abstract IFood UpdateFoodSearch();
     }
 }

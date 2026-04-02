@@ -19,9 +19,9 @@ namespace TestTask_Bioneers.Core
             UpdateReproduce();
         }
 
-        private IFood UpdateFoodSearch()
+        protected override IFood UpdateFoodSearch()
         {
-            return _feedingSystem.GetClosestHerb(_bugModel.Position);
+            return _feedingSystem.GetClosestHerb(_bugModel.Position, _settings.BugViewDistance);
         }
 
         protected override void UpdateReproduce()
