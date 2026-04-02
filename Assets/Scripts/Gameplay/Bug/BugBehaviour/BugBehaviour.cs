@@ -1,4 +1,5 @@
 using TestTask_Bioneers.Core;
+using TestTask_Bioneers.Interfaces;
 using TestTask_Bioneers.ScriptableObjects;
 
 using Unity.Mathematics;
@@ -8,42 +9,80 @@ namespace TestTask_Bioneers.Gameplay
     public abstract class BugBehaviour : IBugBehaviour
     {
         protected readonly GameSettings _settings;
+        protected FeedingSystem _feedingSystem;
+        protected BirthSystem _birthSystem;
 
-        protected BugBehaviour(GameSettings settings)
+        protected Bug _bug;
+        protected BugModel _bugModel;
+        protected float _dt;
+
+        protected BugBehaviour(GameSettings settings, FeedingSystem feedingSystem, BirthSystem birthSystem)
         {
             _settings = settings;
+            _feedingSystem = feedingSystem;
+            _birthSystem = birthSystem;
         }
 
-        public void Update(Bug bug, float deltaTime)
+        public virtual void Update(Bug bug, BugModel bugModel, float dt)
         {
-            throw new System.NotImplementedException();
+            _bug = bug;
+            _bugModel = bugModel;
+            _dt = dt;
         }
 
-/*         protected void RandomWalk(Bug bug, ref BugState state, float dt)
+        protected void MoveToPoint(float2 target)
         {
-            if (!state.HasRandomTarget)
+            float2 delta = target - _bugModel.Position;
+            if (math.lengthsq(delta) > 0.0001f)
             {
-                state.RandomTarget = Templates.Math.GetRandomPosition(
-                    _settings.GameFieldWidth,
-                    _settings.GameFieldHeight);
-
-                state.HasRandomTarget = true;
+                float2 dir = math.normalize(delta);
+                _bugModel.Position += dir * _settings.BugSpeed * _dt;
             }
+        }
 
-            bug.MoveTo(state.RandomTarget, _settings.BugSpeed, dt);
-
-            if (math.distance(bug.Position, state.RandomTarget) < _settings.BugReachDistance)
-                state.HasRandomTarget = false;
-        } */
-
-        protected void MoveTo(Bug bug, float2 target, float dt)
+        protected void RandomWalk()
         {
-            bug.MoveTo(target, _settings.BugSpeed, dt);
+            this.MoveToPoint(_bugModel.MoveTarget);
+            if (IsReached(_bugModel.Position, _bugModel.MoveTarget))
+                _bugModel.MoveTarget = Templates.Math.GetRandomPosition(
+                        _settings.GameFieldWidth,
+                        _settings.GameFieldHeight);
+        }
+
+        protected void MoveToFood(IFood food)
+        {
+            float2 currentPosition = _bugModel.Position;
+            float2 foodPosition = food.Position;
+
+            this.MoveToPoint(foodPosition);
+
+            if (IsReached(currentPosition, foodPosition))
+            {
+                food.Eat();
+                _bugModel.FoodConsumed++;
+            }
         }
 
         protected bool IsReached(float2 a, float2 b)
         {
             return math.distance(a, b) <= _settings.BugReachDistance;
         }
+
+        protected virtual void UpdateMovement(IFood food)
+        {
+            if (food is null)
+            {
+                this.RandomWalk();
+                return;
+            }
+
+            float distanceToFood = math.distance(_bugModel.Position, food.Position);
+            if (distanceToFood <= _settings.BugViewDistance)
+                this.MoveToFood(food);
+            else
+                this.RandomWalk();
+        }
+
+        protected abstract void UpdateReproduce();
     }
 }

@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761822f818dbb5d489fd1f92e1f2fe4a, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: Assembly-CSharp::TestTask_Bioneers.ScriptableObjects.GameSettings
+  _uiUpdateFrames: 5
   _gameFieldWidth: 16
   _gameFieldHeight: 8
   _foodViewPrefab: {fileID: 7054286088209364237, guid: 0c52ed6a06e2f7f44ac3cdc48fe8c9af, type: 3}
   _foodMaxCount: 20
-  _foodAppearTime: 0.3
+  _foodAppearTime: 0.5
   _workerView: {fileID: 4318812008198650553, guid: 9dd03b2f93fe1ba4495a6a7293993dc9, type: 3}
   _predatorView: {fileID: -1101305410972317417, guid: 599f31495c56b714cada14a2995cc13d, type: 3}
   _bugsMaxCount: 10
   _bugAppearTime: 1
   _bugAppearRadius: 0.2
-  _bugSpeed: 5
+  _bugSpeed: 3
   _bugReachDistance: 0.1
   _bugViewDistance: 2
   _predatorSpawnThreshold: 5

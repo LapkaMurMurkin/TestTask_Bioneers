@@ -1,5 +1,6 @@
 using TestTask_Bioneers.Gameplay;
 using TestTask_Bioneers.ScriptableObjects;
+using TestTask_Bioneers.UI;
 
 using UnityEngine;
 
@@ -24,6 +25,8 @@ namespace TestTask_Bioneers.Core
             builder.RegisterComponentInHierarchy<BugSpawnerView>();
 
             builder.Register<BugService>(Lifetime.Singleton);
+
+            builder.RegisterComponentInHierarchy<MainUI>();
         }
     }
 }

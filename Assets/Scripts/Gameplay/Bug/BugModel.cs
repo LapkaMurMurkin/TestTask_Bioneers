@@ -1,20 +1,21 @@
-using Templates;
-
 using Unity.Mathematics;
 
 namespace TestTask_Bioneers.Gameplay
 {
     public class BugModel
     {
-         public float2 Position;
-        public int FoodConsumed;
+        public float2 Position;
+        public float2 MoveTarget;
 
-        public float2 RandomTarget;
-        public bool HasRandomTarget;
+        public int FoodConsumed;
 
         public bool IsAlive;
 
-        public Timer LifeTimer;
-        public Timer PeaceTimer;
+        public BugModel()
+        {
+            IsAlive = true;
+        }
+
+        public PredatorState PredatorState;
     }
 }

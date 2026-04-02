@@ -19,6 +19,8 @@ namespace TestTask_Bioneers.Gameplay
         private Dictionary<Type, BugViewPool> _poolMap;
         private Dictionary<Bug, BugView> _viewMap;
 
+        public event Action<Type> BugDied;
+
         [SerializeField] private Transform _workersChild;
         [SerializeField] private Transform _predatorChild;
 
@@ -51,7 +53,8 @@ namespace TestTask_Bioneers.Gameplay
 
         private void BindView(Bug bug)
         {
-            BugViewPool viewPool = _poolMap[bug.CurrentBehavior.GetType()];
+            Type bugType = bug.CurrentBehavior.GetType();
+            BugViewPool viewPool = _poolMap[bugType];
             BugView newBugView = viewPool.Get();
             newBugView.BindTo(bug);
             _viewMap[bug] = newBugView;
@@ -59,11 +62,14 @@ namespace TestTask_Bioneers.Gameplay
 
         private void DisableView(Bug bug)
         {
-            BugViewPool viewPool = _poolMap[bug.CurrentBehavior.GetType()];
+            Type bugType = bug.CurrentBehavior.GetType();
+            BugViewPool viewPool = _poolMap[bugType];
             BugView bugView = _viewMap[bug];
             bugView.Unbind();
             viewPool.Release(bugView);
             _viewMap.Remove(bug);
+
+            BugDied?.Invoke(bugType);
         }
     }
 }

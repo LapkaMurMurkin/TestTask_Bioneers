@@ -39,7 +39,7 @@ namespace TestTask_Bioneers.Gameplay
             _release?.Invoke(this);
         }
 
-        public void OnEaten()
+        public void Eat()
         {
             Release();
         }

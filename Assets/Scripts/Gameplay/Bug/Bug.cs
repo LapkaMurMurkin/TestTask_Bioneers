@@ -20,28 +20,15 @@ namespace TestTask_Bioneers.Gameplay
 
         public IBugBehaviour CurrentBehavior { get; private set; }
 
-        public void Initialize(float2 position, IBugBehaviour bugBehavior)
+        public void Initialize(BugModel bugModel, IBugBehaviour bugBehavior)
         {
-            _model = new BugModel();
-            _model.IsAlive = true;
-            _model.Position = position;
-
+            _model = bugModel;
             CurrentBehavior = bugBehavior;
         }
 
         public void UpdateBehavior(float deltaTime)
         {
-            CurrentBehavior?.Update(this, deltaTime);
-        }
-
-        public void MoveTo(float2 target, float speed, float deltaTime)
-        {
-            float2 delta = target - _model.Position;
-            if (math.lengthsq(delta) > 0.0001f)
-            {
-                float2 dir = math.normalize(delta);
-                _model.Position += dir * speed * deltaTime;
-            }
+            CurrentBehavior?.Update(this, _model, deltaTime);
         }
 
         public void SetReleaseAction(Action<Bug> release)
@@ -60,15 +47,9 @@ namespace TestTask_Bioneers.Gameplay
             Release();
         }
 
-        public void OnEaten()
+        public void Eat()
         {
             Die();
-        }
-
-        public void Consume(IFood food)
-        {
-            food.OnEaten();
-            _model.FoodConsumed++;
         }
     }
 }

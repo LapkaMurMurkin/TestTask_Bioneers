@@ -7,6 +7,9 @@ namespace TestTask_Bioneers.ScriptableObjects
     [CreateAssetMenu(fileName = "GameSettings", menuName = "ScriptableObjects/GameSettings")]
     public class GameSettings : ScriptableObject
     {
+        [Header("System")]
+        [SerializeField] private int _uiUpdateFrames;
+
         [Header("GameField")]
         [SerializeField] private float _gameFieldWidth;
         [SerializeField] private float _gameFieldHeight;
@@ -30,6 +33,8 @@ namespace TestTask_Bioneers.ScriptableObjects
         [SerializeField] private float _predatorSpawnChancePercent;
         [SerializeField] private float _predatorLifeTime;
         [SerializeField] private float _predatorPeaceTime;
+
+        public int UIUpdateFrames => _uiUpdateFrames;
 
         public float GameFieldWidth => _gameFieldWidth;
         public float GameFieldHeight => _gameFieldHeight;

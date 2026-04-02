@@ -4,6 +4,6 @@ namespace TestTask_Bioneers.Core
 {
     public interface IBugBehaviour
     {
-        public void Update(Bug bug, float deltaTime);
+        public void Update(Bug bug, BugModel bugModel, float dt);
     }
 }
