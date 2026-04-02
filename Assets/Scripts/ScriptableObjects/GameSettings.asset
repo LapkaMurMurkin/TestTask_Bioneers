@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: Assembly-CSharp::TestTask_Bioneers.ScriptableObjects.GameSettings
   _uiUpdateFrames: 5
-  _gameFieldWidth: 16
-  _gameFieldHeight: 8
-  _foodViewPrefab: {fileID: 7054286088209364237, guid: 0c52ed6a06e2f7f44ac3cdc48fe8c9af, type: 3}
-  _foodMaxCount: 20
-  _foodAppearTime: 0.5
+  _gameFieldWidth: 20
+  _gameFieldHeight: 10
+  _herbViewPrefab: {fileID: 7054286088209364237, guid: 0c52ed6a06e2f7f44ac3cdc48fe8c9af, type: 3}
+  _herbMaxCount: 30
+  _herbAppearTime: 0.2
   _workerView: {fileID: 4318812008198650553, guid: 9dd03b2f93fe1ba4495a6a7293993dc9, type: 3}
   _predatorView: {fileID: -1101305410972317417, guid: 599f31495c56b714cada14a2995cc13d, type: 3}
-  _bugsMaxCount: 10
+  _bugsMaxCount: 20
   _bugAppearTime: 1
   _bugAppearRadius: 0.2
   _bugSpeed: 3
-  _bugReachDistance: 0.1
+  _bugReachDistance: 0.2
   _bugViewDistance: 2
-  _predatorSpawnThreshold: 5
-  _predatorSpawnChancePercent: 0.503
+  _predatorSpawnThreshold: 10
+  _predatorSpawnChancePercent: 0.1
   _predatorLifeTime: 10
   _predatorPeaceTime: 2

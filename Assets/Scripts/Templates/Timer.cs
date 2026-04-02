@@ -1,41 +1,66 @@
-
-using System;
-
-using Unity.Mathematics;
-
 namespace Templates
 {
     public struct Timer
     {
-        public TimeSpan Duration;
-        public TimeSpan Elapsed;
-        public TimeSpan Remaining => Duration - Elapsed;
-        public float Percent => (float)math.clamp(Elapsed.TotalMilliseconds / Duration.TotalSeconds, 0, 1);
-        public bool IsFinished => Elapsed >= Duration;
+        private float _time;     // текущее время
+        private float _duration; // длительность
 
-        public Timer(float seconds, float elapsed = 0)
+        public Timer(float duration)
         {
-            Duration = TimeSpan.FromSeconds(seconds);
-            this.Elapsed = TimeSpan.FromSeconds(elapsed);
+            _time = 0f;
+            _duration = duration;
         }
 
         /// <summary>
-        /// 
+        /// Возвращает true, когда время вышло
         /// </summary>
-        /// <param name="dt">Delta time in seconds</param>
-        public void Update(double dt)
+        public bool Update(float dt)
         {
-            Elapsed += TimeSpan.FromSeconds(dt);
+            _time += dt;
+
+            if (_time >= _duration)
+                return true;
+
+            return false;
         }
 
-        public void SoftReset()
+        /// <summary>
+        /// Возвращает true, когда таймер сработал (loop)
+        /// </summary>
+        public bool UpdateLoop(float dt)
         {
-            Elapsed -= Duration;
+            _time += dt;
+
+            if (_time >= _duration)
+            {
+                _time -= _duration;
+                return true;
+            }
+
+            return false;
         }
 
-        public void HardReset()
+        /// <summary>
+        /// One-shot (срабатывает один раз)
+        /// </summary>
+        public bool TickOnce(float dt)
         {
-            Elapsed = default;
+            if (_time >= _duration)
+                return false;
+
+            _time += dt;
+            return _time >= _duration;
+        }
+
+        public void Reset()
+        {
+            _time = 0f;
+        }
+
+        public void Set(float duration)
+        {
+            _duration = duration;
+            _time = 0f;
         }
     }
 }

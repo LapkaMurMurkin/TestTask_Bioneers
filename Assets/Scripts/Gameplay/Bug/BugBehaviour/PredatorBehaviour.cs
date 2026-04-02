@@ -25,17 +25,15 @@ namespace TestTask_Bioneers.Gameplay
 
         private IFood UpdateFoodSearch()
         {
-            _predatorState.PeaceTimer.Update(_dt);
-            if (_predatorState.PeaceTimer.IsFinished is false)
-                return _feedingSystem.GetClosestHerb(_bugModel.Position);
-            else
+            if (_predatorState.PeaceTimer.Update(_dt))
                 return _feedingSystem.GetClosestFood(_bugModel.Position, food => food != _bug);
+            else
+                return _feedingSystem.GetClosestHerb(_bugModel.Position);
         }
 
         private void UpdateLifeTime()
         {
-            _predatorState.LifeTimer.Update(_dt);
-            if (_predatorState.LifeTimer.IsFinished)
+            if (_predatorState.LifeTimer.UpdateLoop(_dt))
                 _bug.Die();
         }
 

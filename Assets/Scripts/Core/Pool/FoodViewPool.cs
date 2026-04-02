@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace TestTask_Bioneers.Core
 {
-    public class FoodViewPool
+    public class HerbViewPool
     {
         private readonly ObjectPool<HerbView> _pool;
 
-        public FoodViewPool(HerbView prefab, Transform parent)
+        public HerbViewPool(HerbView prefab, Transform parent)
         {
             _pool = new ObjectPool<HerbView>(
                 () => Create(prefab, parent),

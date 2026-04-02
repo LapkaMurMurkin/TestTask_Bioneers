@@ -18,8 +18,8 @@ namespace TestTask_Bioneers.Core
             builder.RegisterInstance(_gameSettings);
             builder.RegisterEntryPoint<GameEntryPoint>();
 
-            builder.Register<FoodSpawner>(Lifetime.Singleton);
-            builder.RegisterComponentInHierarchy<FoodSpawnerView>();
+            builder.Register<HerbSpawner>(Lifetime.Singleton);
+            builder.RegisterComponentInHierarchy<HerbSpawnerView>();
 
             builder.Register<BugSpawner>(Lifetime.Singleton);
             builder.RegisterComponentInHierarchy<BugSpawnerView>();

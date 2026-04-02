@@ -47,14 +47,14 @@ namespace TestTask_Bioneers.Core
 
         public Bug CreateWorker(float2 position)
         {
-            BugModel bugModel = new BugModel();
+            BugModel bugModel = new BugModel(_settings);
             WorkerBehaviour workerBehaviour = new WorkerBehaviour(_settings, _feedingSystem, _birthSystem);
             return CreateBug(position, bugModel, workerBehaviour);
         }
 
         public Bug CreatePredator(float2 position)
         {
-            BugModel bugModel = new BugModel();
+            BugModel bugModel = new BugModel(_settings);
             bugModel.PredatorState = new PredatorState(_settings.PredatorLifeTime, _settings.PredatorPeaceTime);
             PredatorBehaviour predatorBehaviour = new PredatorBehaviour(_settings, _feedingSystem, _birthSystem);
             return CreateBug(position, bugModel, predatorBehaviour);

@@ -1,5 +1,3 @@
-using System;
-
 using Templates;
 
 using TestTask_Bioneers.Gameplay;
@@ -10,31 +8,25 @@ using VContainer.Unity;
 
 namespace TestTask_Bioneers.Core
 {
-    public class GameEntryPoint : IStartable, ITickable, IDisposable
+    public class GameEntryPoint : ITickable
     {
         private readonly GameSettings _gameSettings;
-        private readonly FoodSpawner _foodSpawner;
+        private readonly HerbSpawner _herbSpawner;
         private readonly BugSpawner _bugSpawner;
         private readonly BugService _bugService;
         private readonly MainUI _mainUI;
 
         private Timer _uiUpdateTimer;
 
-        public GameEntryPoint(GameSettings gameSettings, FoodSpawner foodSpawner, BugSpawner bugSpawner, BugService bugService, MainUI mainUI)
+        public GameEntryPoint(GameSettings gameSettings, HerbSpawner herbSpawner, BugSpawner bugSpawner, BugService bugService, MainUI mainUI)
         {
             _gameSettings = gameSettings;
-            _foodSpawner = foodSpawner;
+            _herbSpawner = herbSpawner;
             _bugSpawner = bugSpawner;
             _bugService = bugService;
             _mainUI = mainUI;
 
             _uiUpdateTimer = new Timer(1f / _gameSettings.UIUpdateFrames);
-        }
-
-        public void Start()
-        {
-            _foodSpawner.StartSpawn();
-            _bugSpawner.StartSpawn();
         }
 
         public void Tick()
@@ -46,23 +38,15 @@ namespace TestTask_Bioneers.Core
 
         private void UpdateGame(float dt)
         {
+            _herbSpawner.Update(dt);
+            _bugSpawner.Update(dt);
             _bugService.Update(dt);
         }
 
         private void UpdateUI(float dt)
         {
-            _uiUpdateTimer.Update(dt);
-            if (_uiUpdateTimer.IsFinished)
-            {
+            if (_uiUpdateTimer.UpdateLoop(dt))
                 _mainUI.UpdateUI();
-                _uiUpdateTimer.SoftReset();
-            }
-        }
-
-        public void Dispose()
-        {
-            _foodSpawner.Dispose();
-            _bugSpawner.Dispose();
         }
     }
 }

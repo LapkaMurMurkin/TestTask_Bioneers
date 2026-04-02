@@ -14,10 +14,10 @@ namespace TestTask_Bioneers.ScriptableObjects
         [SerializeField] private float _gameFieldWidth;
         [SerializeField] private float _gameFieldHeight;
 
-        [Header("Food")]
-        [SerializeField] private HerbView _foodViewPrefab;
-        [SerializeField] private int _foodMaxCount;
-        [SerializeField] private float _foodAppearTime;
+        [Header("Herb")]
+        [SerializeField] private HerbView _herbViewPrefab;
+        [SerializeField] private int _herbMaxCount;
+        [SerializeField] private float _herbAppearTime;
 
         [Header("Bugs")]
         [SerializeField] private BugView _workerView;
@@ -39,9 +39,9 @@ namespace TestTask_Bioneers.ScriptableObjects
         public float GameFieldWidth => _gameFieldWidth;
         public float GameFieldHeight => _gameFieldHeight;
 
-        public HerbView FoodViewPrefab => _foodViewPrefab;
-        public int FoodMaxCount => _foodMaxCount;
-        public float FoodAppearInterval => _foodAppearTime;
+        public HerbView HerbViewPrefab => _herbViewPrefab;
+        public int HerbMaxCount => _herbMaxCount;
+        public float HerbAppearInterval => _herbAppearTime;
 
         public BugView WorkerView => _workerView;
         public BugView PredatorView => _predatorView;

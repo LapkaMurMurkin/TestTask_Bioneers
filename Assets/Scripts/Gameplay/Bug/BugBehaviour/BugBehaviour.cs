@@ -43,10 +43,11 @@ namespace TestTask_Bioneers.Gameplay
         protected void RandomWalk()
         {
             this.MoveToPoint(_bugModel.MoveTarget);
+
             if (IsReached(_bugModel.Position, _bugModel.MoveTarget))
                 _bugModel.MoveTarget = Templates.Math.GetRandomPosition(
-                        _settings.GameFieldWidth,
-                        _settings.GameFieldHeight);
+                    _settings.GameFieldWidth,
+                    _settings.GameFieldHeight);
         }
 
         protected void MoveToFood(IFood food)

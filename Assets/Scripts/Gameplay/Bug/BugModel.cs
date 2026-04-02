@@ -1,3 +1,5 @@
+using TestTask_Bioneers.ScriptableObjects;
+
 using Unity.Mathematics;
 
 namespace TestTask_Bioneers.Gameplay
@@ -11,9 +13,12 @@ namespace TestTask_Bioneers.Gameplay
 
         public bool IsAlive;
 
-        public BugModel()
+        public BugModel(GameSettings settings)
         {
             IsAlive = true;
+            MoveTarget = Templates.Math.GetRandomPosition(
+                    settings.GameFieldWidth,
+                    settings.GameFieldHeight);
         }
 
         public PredatorState PredatorState;
